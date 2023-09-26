@@ -1,0 +1,23 @@
+https://github.com/Mackman10/Mackysfood-frontend
+
+<i> Extras on progress... </i>
+### Admin
+    - Menu management
+        - Add
+        - Delete
+        - Edit
+        - View
+        - Counter
+    - User Management
+        - Activate User
+        - Deactivate User
+        - Pend User
+        - View User
+        - Create User
+        - Delete User
+        - Edit User
+        - Count Users
+    - Status
+        - Type
+        - Edit
+        - Delete

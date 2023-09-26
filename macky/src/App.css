@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,200;6..12,400;6..12,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    @apply bg-white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+p {
+  font-family: 'Inter', sans-serif;
+}
+
+/* styles.css */
+
+.hero-section {
+  background-image: url(./resources/hero.png);
+}
+
+/* Style for the container */
+.search-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Style for the search input */
+.search-input {
+    padding: 20px 27px; /* Add padding to accommodate the button */
+    border: 1px solid #ccc;
+    border-radius: 40px; /* Round the corners */
+    outline: none; 
+}
+
+/* Style for the search button */
+.search-button {
+    position: absolute;
+    right: 8px; /* Adjust the button position */
+    top: 8px; /* Adjust the button position */
+    @apply bg-primary-red;
+    color: white;
+    border: none; 
+    padding: 13px;
+    cursor: pointer;
+}
+
+/* Style for button hover effect */
+.search-button:hover {
+    background-color: darkred;
+}
+
+
+footer p {
+  font-size: 12px;
+}
+
+.nav-container {
+  display: none;
+}
+
+/*Media query which handles the navigation of the mobile view of the application*/
+@media only screen and (max-width: 482px) {
+  .nav-container {
+    display: block;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    background-color: rgb(255, 255, 255);
+    backdrop-filter: blur(0.3rem);
+    transition: transform 600ms ease-out;
+    transform: translateX(100%);
+    z-index: 9999;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 0;
+  }
+
+  .open-nav {
+    transform: translateX(-0%);
+  }
+
+  /*used to ensure support on multiple browsers*/
+  @supports (inset: 0 0 0 0) {
+    .nav-container {
+      inset: 0 0 0 0;
+    }
+  }
+}
+
