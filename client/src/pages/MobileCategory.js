@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
-import { useGlobalContext } from './contextApi'
-import Home from './Home';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useGlobalContext } from "../components/contextApi";
+import Home from "./Home";
 
 function MobileCategory() {
   const [categoryInfo, setCategoryInfo] = useState(null);
@@ -41,20 +41,16 @@ function MobileCategory() {
       closeModal();
     }, 5000);
   };
-  //function which handles the increaase in the amount of the particular food in the category section before adding to tray
-  const increaseAmountOnMobile = (id) => {
-    dispatch({ type: "INCREASEAMOUNTFROMCATEGORY", payload: id });
-  };
 
-  //function which reduces the amount of the particular food in the category section before adding to tray
-  const reduceAmountOnMobile = (id) => {
-    dispatch({ type: "REDUCEAMOUNTFROMCATEGORY", payload: id });
+  //function which handles the change of amount of the particular food in the category section before adding to tray
+  const selectAmountOnMobile = (num, id) => {
+    dispatch({ type: "CHANGEAMOUNT", payload: { num, id } });
   };
 
   return (
     <>
       <Home />
-      <div className="fixed top-0 flex flex-col justify-center overflow-y-auto overscroll-contain h-full w-full backdrop-opacity-90 bg-black/95 backdrop-blur-md p-5">
+      <div className="fixed top-0 flex flex-col overflow-y-auto overscroll-contain h-full w-full backdrop-opacity-90 bg-black/95 backdrop-blur-md p-5">
         {categoryName?.map((items) => {
           const { name, id } = items;
           return (
@@ -74,15 +70,15 @@ function MobileCategory() {
         })}
         {categoryInfo ? (
           <div>
-            <div className="flex items-center justify-center w-[351px] h-[85px] mb-10">
-              <div className="rounded-full w-[85px] h-[85px] overflow-hidden mr-4">
-                <img
-                  src={categoryInfo.img}
-                  alt="category"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="flex items-center justify-between text-white w-[240px]">
+            <div className="flex items-center justify-between w-full h-[85px] mb-24">
+              <div className="flex items-center text-white">
+                <div className="rounded-full w-[85px] h-[85px] overflow-hidden mr-2">
+                  <img
+                    src={categoryInfo.img}
+                    alt="category"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
                 <div className="w-[125px]">
                   <p className="font-medium text-[24px] mb-2">
                     {categoryInfo.name}
@@ -92,36 +88,55 @@ function MobileCategory() {
                     <p>15 - 25mins</p>
                   </span>
                 </div>
-                <i className="bx bxs-heart-circle bx-md opacity-40 cursor-pointer"></i>
               </div>
+              <i className="bx bxs-heart-circle bx-md opacity-40 text-white cursor-pointer"></i>
             </div>
             <div>
               {categoryInfo.features.map((items) => {
                 const { price, size, id, amount } = items;
                 return (
                   <div key={id}>
-                    <div className="flex flex-col md:w-11/12 text-white md:border-e border-[#E3E3E340] p-1 md:p-5">
-                      <div className="flex justify-between md:w-full mb-3">
+                    <div className="flex flex-col text-white border-[#E3E3E340] p-1">
+                      <div className="flex justify-between mb-3">
                         <div>
                           <p className="mb-3 text-xl">{size}</p>
                           <p className="text-xl">#{price}</p>
                         </div>
                         <div>
                           <p className="mb-3">Qty</p>
-                          <div className="flex items-center justify-center rounded-3xl border border-[#e3e4e8]">
-                            <button
-                              onClick={() => reduceAmountOnMobile(id)}
-                              className="mx-2"
+                          <div className="flex items-center justify-center ">
+                            <select
+                              className="rounded-3xl bg-[#D9D9D920] text-white text-[20px] px-3"
+                              onChange={(e) =>
+                                selectAmountOnMobile(e.target.value, id)
+                              }
                             >
-                              <i className="bx bx-minus"></i>
-                            </button>
-                            {amount}
-                            <button
-                              onClick={() => increaseAmountOnMobile(id)}
-                              className="mx-2"
-                            >
-                              <i className="bx bx-plus"></i>
-                            </button>
+                              <option className="text-black">{amount}</option>
+                              <option className="text-black" value="2">
+                                2
+                              </option>
+                              <option className="text-black" value="3">
+                                3
+                              </option>
+                              <option className="text-black" value="4">
+                                4
+                              </option>
+                              <option className="text-black" value="5">
+                                5
+                              </option>
+                              <option className="text-black" value="6">
+                                6
+                              </option>
+                              <option className="text-black" value="7">
+                                7
+                              </option>
+                              <option className="text-black" value="8">
+                                8
+                              </option>
+                              <option className="text-black" value="9">
+                                9
+                              </option>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -129,7 +144,7 @@ function MobileCategory() {
                         onClick={() =>
                           HandleAddToTray(id, foodInfo.name, foodInfo.img)
                         }
-                        className="rounded-3xl bg-primary-red text-white w-32 ms-auto text-sm px-3 py-3"
+                        className="rounded-3xl bg-primary-red text-white w-[108px] ms-auto text-sm px-3 py-3"
                       >
                         Add to Tray
                       </button>

@@ -45,7 +45,7 @@ p {
 /* Style for the search button */
 .search-button {
     position: absolute;
-    right: 8px; /* Adjust the button position */
+    right: 10px; /* Adjust the button position */
     top: 8px; /* Adjust the button position */
     @apply bg-primary-red;
     color: white;

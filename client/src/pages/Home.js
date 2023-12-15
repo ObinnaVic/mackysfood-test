@@ -1,16 +1,23 @@
-import React,{useEffect} from 'react'
-import { useGlobalContext } from './contextApi';
+import React, { useEffect, useState } from "react";
+import { useGlobalContext } from "../components/contextApi";
+import Category from "./Category";
+import Nav from "../components/Nav";
 import ComingSoon from "../resources/comingsoon.png";
 import mobile from "../resources/mobile.png";
-import Category from './Category';
-import Nav from "./Nav";
-
+import loading from "../resources/loading.gif";
 
 function Home() {
+  const [imageLoading, setImageLoading] = useState(true);
   const { state, dispatch } = useGlobalContext();
   const { category, selectedCategory, selectedCategoryName } = state;
 
   const apiUrl = "https://mackysfood-dummy-api.vercel.app/menus"; //Api endpoint to fetch the list of all the menu items
+
+  useEffect(() => {
+    setTimeout(() => {
+      setImageLoading(false);
+    }, [5000]);
+  }, []);
 
   // Make a GET request using the fetch function
   useEffect(() => {
@@ -75,13 +82,13 @@ function Home() {
         </div>
         <div className="flex flex-col md:flex-row text-white items-center mt-[80px] md:mt-4">
           <p className="text-sm mr-2">Popular dishes: </p>
-          <p className="text-xs md:text-sm border border-white rounded-3xl m-3 md:m-1 py-[2px] px-2">
+          <p className="text-xs md:text-sm border border-white rounded-3xl m-3 md:m-1 py-[6px] px-2">
             White rice and stew
           </p>
-          <p className="text-xs md:text-sm border border-white rounded-3xl m-3 md:m-1 py-[2px] px-2">
+          <p className="text-xs md:text-sm border border-white rounded-3xl m-3 md:m-1 py-[6px] px-2">
             Pounded yam and Egusi
           </p>
-          <p className="text-xs md:text-sm border border-white rounded-3xl m-3 md:m-1 py-[2px] px-2">
+          <p className="text-xs md:text-sm border border-white rounded-3xl m-3 md:m-1 py-[6px] px-2">
             Jollof rice
           </p>
         </div>
@@ -92,9 +99,7 @@ function Home() {
             <h1 className="font-bold">Choose from our tasty meal categories</h1>
           </header>
           <div className="flex ">
-            {category.length === 0 ? (
-              <div className="text-primary-red text-center">Loading...</div>
-            ) : (
+            {category.length > 0 &&
               category.map((item, index) => {
                 return (
                   <button
@@ -105,30 +110,42 @@ function Home() {
                     <h2>{item}</h2>
                   </button>
                 );
-              })
-            )}
+              })}
           </div>
         </div>
-        <div className="grid grid-flow-row md:grid-cols-3 grid-cols-2 md:grid-rows-3 grid-rows-5 gap-[20px] mx-auto mb-20">
-          {/*If the categories or menu is empty, display a "loading", else display the selected category or the full menu */}
-          {selectedCategory.length === 0 ? (
-            <div className="text-primary-red text-center">Loading...</div>
-          ) : (
-            selectedCategory.map((items) => {
+        {/*If the categories or menu is empty, display a "loading", else display the selected category or the full menu */}
+        {selectedCategory.length === 0 ? (
+          <img
+            src={loading}
+            className="flex mx-auto w-[100px]"
+            alt="loading animation"
+          />
+        ) : (
+          <div className="grid grid-flow-row md:grid-cols-3 grid-cols-2 md:grid-rows-3 grid-rows-5 gap-[20px] mx-auto mb-20">
+            {selectedCategory.map((items) => {
               const { img, name, categories, id } = items;
               return (
                 <div
                   key={id}
                   className=" mx-auto w-[170px] h-[301px] lg:w-[220px]  lg:h-[252px] max-[360px]:w-[150px] mb-10"
                 >
-                  <div className="flex justify-center items-center mx-auto rounded-full w-[170.51px] h-[170.51px] md:w-[155px] md:h-[155px] lg:w-[170.51px] lg:h-[170.51px] max-[360px]:w-[130px] max-[360px]:h-[130px] overflow-hidden mb-7 border border-primary-red">
+                  {imageLoading ? (
                     <img
-                      src={img}
-                      alt="foods"
-                      loading="lazy"
-                      className="rounded-full w-[162.81px] h-[162.81px] md:w-[150px] md:h-[150px] lg:w-[162.81px] lg:h-[162.81px] max-[360px]:w-[120px] max-[360px]:h-[120px]"
+                      src={loading}
+                      className="flex mx-auto w-[100px]"
+                      alt="loading animation"
                     />
-                  </div>
+                  ) : (
+                    <div className="flex justify-center items-center mx-auto rounded-full w-[170.51px] h-[170.51px] md:w-[155px] md:h-[155px] lg:w-[170.51px] lg:h-[170.51px] max-[360px]:w-[130px] max-[360px]:h-[130px] overflow-hidden mb-7 border border-primary-red">
+                      <img
+                        src={img}
+                        alt="foods"
+                        loading="lazy"
+                        className="rounded-full w-[162.81px] h-[162.81px] md:w-[150px] md:h-[150px] lg:w-[162.81px] lg:h-[162.81px] max-[360px]:w-[120px] max-[360px]:h-[120px]"
+                      />
+                    </div>
+                  )}
+
                   <div className="flex flex-col items-center mx-auto lg:flex-row lg:justify-between w-[105px] h-[112.5px] lg:w-[220px] lg:h-[43px]">
                     <div className="text-center md:text-left mb-4">
                       <p className="text-[18px] font-semibold">
@@ -139,7 +156,7 @@ function Home() {
                       </p>
                     </div>
                     <button
-                      className="rounded-3xl bg-primary-red text-white text-[14px] w-[105px] h-[45px] md:w-[86px] md:h-[35px] py-[14px] px-[29px] md:py-[9px] md:px-[18px]"
+                      className="rounded-3xl bg-primary-red text-white text-[14px] w-[110px] h-[45px] md:w-[86px] md:h-[35px] py-[14px] px-[25px] md:py-[9px] md:px-[18px]"
                       onClick={() => HandleSelectedCategory(name)}
                     >
                       view all
@@ -147,9 +164,9 @@ function Home() {
                   </div>
                 </div>
               );
-            })
-          )}
-        </div>
+            })}
+          </div>
+        )}
         <div className="bg-[#FEEFAC] relative w-[97%] md:w-full h-36 md:h-48 rounded-3xl mb-16 mx-auto">
           <div className="absolute top-10 md:top-14 left-2 md:left-28">
             <img
@@ -178,4 +195,4 @@ function Home() {
   );
 }
 
-export default Home
+export default Home;

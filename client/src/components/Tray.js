@@ -20,14 +20,10 @@ function Tray() {
   }, []);
 
   //function which handles the increaase in the amount of the particular food in the tray
-  const increaseAmount = (id) => {
-    dispatch({ type: "INCREASEAMOUNT", payload: id });
+  const changeAmount = (num, id) => {
+    dispatch({ type: "CHANGEAMOUNTINTRAY", payload: { num, id } });
   };
 
-  //function which reduces the amount of the particular food
-  const reduceAmount = (id) => {
-    dispatch({type: "REDUCEAMOUNT", payload: id})
-  }
 
   //function which removes a particular food from the tray
   const removeItem = (id) => {
@@ -91,20 +87,39 @@ function Tray() {
                       </p>
                       <div className="flex items-center justify-between w-28 my-2">
                         <p className="mr-2 text-sm">Quantity</p>
-                        <div className="flex items-center border border-[#e3e4e8]">
-                          <button
-                            onClick={() => reduceAmount(id)}
-                            className="mx-2"
+                        <div className="flex items-center justify-center ">
+                          <select
+                            className="rounded-3xl bg-[#D9D9D920] text-black text-[14px] px-1"
+                            onChange={(e) =>
+                              changeAmount(e.target.value, id)
+                            }
                           >
-                            <i className="bx bx-minus"></i>
-                          </button>
-                          {amount}
-                          <button
-                            onClick={() => increaseAmount(id)}
-                            className="mx-2"
-                          >
-                            <i className="bx bx-plus"></i>
-                          </button>
+                            <option className="text-black">{amount}</option>
+                            <option className="text-black" value="2">
+                              2
+                            </option>
+                            <option className="text-black" value="3">
+                              3
+                            </option>
+                            <option className="text-black" value="4">
+                              4
+                            </option>
+                            <option className="text-black" value="5">
+                              5
+                            </option>
+                            <option className="text-black" value="6">
+                              6
+                            </option>
+                            <option className="text-black" value="7">
+                              7
+                            </option>
+                            <option className="text-black" value="8">
+                              8
+                            </option>
+                            <option className="text-black" value="9">
+                              9
+                            </option>
+                          </select>
                         </div>
                       </div>
                       <div className="flex items-center justify-between">

@@ -1,20 +1,20 @@
-import React from 'react'
-import { useGlobalContext } from './contextApi';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useGlobalContext } from "../components/contextApi";
+import { Link } from "react-router-dom";
 
 function Address() {
-    const {state, dispatch} = useGlobalContext();
-    const {addressInput} = state;
+  const { state, dispatch } = useGlobalContext();
+  const { addressInput } = state;
 
-    //function to handle the closing of the address modal
-    const closeAddressModal = () => {
-        dispatch({type: "CLOSEADDRESSMODAL"})
-    }
+  //function to handle the closing of the address modal
+  const closeAddressModal = () => {
+    dispatch({ type: "CLOSEADDRESSMODAL" });
+  };
 
-    //function to handle the opening of the address modal
-    const openAddressInput = () => {
-      dispatch({type: "OPENADDRESSINPUT"})
-    }
+  //function to handle the opening of the address modal
+  const openAddressInput = () => {
+    dispatch({ type: "OPENADDRESSINPUT" });
+  };
 
   return (
     <div className="w-full md:w-3/5 bg-white p-5">
@@ -80,4 +80,4 @@ function Address() {
   );
 }
 
-export default Address
+export default Address;

@@ -1,19 +1,19 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
-import Tray from './Tray';
-import Address from './Address';
-import Nav from "./Nav";
-import { useGlobalContext } from './contextApi';
+import React from "react";
+import { Link } from "react-router-dom";
+import Tray from "../components/Tray";
+import Address from "./Address";
+import Nav from "../components/Nav";
+import { useGlobalContext } from "../components/contextApi";
 
 function Delivery() {
-  const {state, dispatch} = useGlobalContext()
-  const {addressModal} = state;
+  const { state, dispatch } = useGlobalContext();
+  const { addressModal } = state;
 
   //function to handle the opening of the address  modal
   const HandleAddressModal = () => {
     dispatch({ type: "OPENADDRESSMODAL" });
-  }
-  
+  };
+
   return (
     <div>
       <Nav menuColor={"black"} />
@@ -104,4 +104,4 @@ function Delivery() {
   );
 }
 
-export default Delivery
+export default Delivery;

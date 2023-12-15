@@ -77,29 +77,12 @@ const reducer = (state, action) => {
     };
   }
 
-  if (action.type === "INCREASEAMOUNTFROMCATEGORY") {
+  //Statement which handles the increase or decrease of the amount value
+  if (action.type === "CHANGEAMOUNT") {
+    const {num, id} = action.payload
     const features = state.foodInfo.features.map((item) => {
-      if (item.id === action.payload) {
-        item = { ...item, amount: item.amount + 1 };
-      }
-      return item;
-    });
-
-    const newInfo = {...state.foodInfo, features}
-    localStorage.setItem("categoryInfo", JSON.stringify(newInfo));
-
-    return {...state, foodInfo: newInfo}
-  }
-
-  if (action.type === "REDUCEAMOUNTFROMCATEGORY") {
-    //maps and - 1 from the current amount. If the amount if less than 1, it returns 0 and can not go lower than 0
-    let features = state.foodInfo.features.map((item) => {
-      if (item.id === action.payload) {
-        if (item.amount < 2) {
-          item = { ...item, amount: 1 };
-        } else {
-          item = { ...item, amount: item.amount - 1 };
-        }
+      if (item.id === id) {
+        item = { ...item, amount: num };
       }
       return item;
     });
@@ -107,10 +90,8 @@ const reducer = (state, action) => {
     const newInfo = { ...state.foodInfo, features };
     localStorage.setItem("categoryInfo", JSON.stringify(newInfo));
 
-    return {...state, foodInfo: newInfo}
+    return { ...state, foodInfo: newInfo };
   }
-
-
 
   //statement that addds a particular food to the food tray when the user clicks on the add to tray
   if (action.type === "HANDLEADDTOTRAY") {
@@ -149,12 +130,12 @@ const reducer = (state, action) => {
   }
 
   //statement which handles the increasing function of a particular food amount in the tray
-  if (action.type === "INCREASEAMOUNT") {
-    
+  if (action.type === "CHANGEAMOUNTINTRAY") {
+    const {num, id} = action.payload
     //maps ovver the food in the tray and adds 1 to the selected food count
     let addAmount = state.tray.map((item) => {
-      if (item.id === action.payload) {
-        item = { ...item, amount: item.amount + 1 };
+      if (item.id === id) {
+        item = { ...item, amount: num };
       }
       return item;
     })
@@ -163,26 +144,6 @@ const reducer = (state, action) => {
     localStorage.setItem("tray", JSON.stringify(addAmount));
 
     return {...state, tray: addAmount}
-  }
-
-  //statement to reduce the amount of a particular food
-  if (action.type === "REDUCEAMOUNT") {
-    //maps and - 1 from the current amount. If the amount if less than 1, it returns 0 and can not go lower than 0
-    let addAmount = state.tray.map((item) => {
-      if (item.id === action.payload) {
-        if (item.amount < 1) {
-          item = { ...item, amount: 0 };
-        } else {
-          item = {...item, amount: item.amount - 1}
-        }
-      }
-      return item;
-    });
-
-    //updates the local Storage 
-    localStorage.setItem("tray", JSON.stringify(addAmount));
-
-    return { ...state, tray: addAmount };
   }
 
   //statement to remove a particular food from the tray

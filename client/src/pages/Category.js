@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { useGlobalContext } from './contextApi';
-import { Link } from 'react-router-dom';
-import MobileCategory from './MobileCategory';
+import React, { useEffect, useState } from "react";
+import { useGlobalContext } from "../components/contextApi";
+import { Link } from "react-router-dom";
+import loading from "../resources/loading.gif";
 
 function Category() {
+  const [imageLoading, setImageLoading] = useState(true);
   const [categoryInfo, setCategoryInfo] = useState(null);
   const { state, dispatch } = useGlobalContext();
   const {
@@ -17,6 +18,12 @@ function Category() {
 
   //api url for fetching the categories based on the name of the food selected by the user
   const categoryUrl = `https://mackysfood-dummy-api.vercel.app/menus?name=${selectedCategoryName}`;
+
+  useEffect(() => {
+    setTimeout(() => {
+      setImageLoading(false);
+    }, [3000]);
+  }, []);
 
   //UseEffect function to handle the fetching of the category
   useEffect(() => {
@@ -38,12 +45,12 @@ function Category() {
   }, [selectedCategoryName]);
 
   useEffect(() => {
-   const getInfo = () => {
-     const fetchedInfo = JSON.parse(localStorage.getItem("categoryInfo"));
-     setCategoryInfo(fetchedInfo);
-   };
-   getInfo();
-  }, [foodInfo])
+    const getInfo = () => {
+      const fetchedInfo = JSON.parse(localStorage.getItem("categoryInfo"));
+      setCategoryInfo(fetchedInfo);
+    };
+    getInfo();
+  }, [foodInfo]);
 
   //function to handle closing of the particular food catgeory selected by the user
   const CloseCategoryModal = () => {
@@ -51,7 +58,7 @@ function Category() {
   };
 
   //function that passes the name and id of the particular food added to the tray to the context
-  const HandleFoodInfo = (name, id ) => {
+  const HandleFoodInfo = (name, id) => {
     dispatch({ type: "HANDLEFOODINFO", payload: { name, id } });
   };
 
@@ -73,20 +80,16 @@ function Category() {
     }, 5000);
   };
 
-  //function which handles the increaase in the amount of the particular food in the category section before adding to tray
-  const increaseAmountFromCategory = (id) => {
-    dispatch({ type: "INCREASEAMOUNTFROMCATEGORY", payload: id });
-  };
-
-  //function which reduces the amount of the particular food in the category section before adding to tray
-  const reduceAmountFromCategory = (id) => {
-    dispatch({ type: "REDUCEAMOUNTFROMCATEGORY", payload: id });
+  //function which handles the change of amount of the particular food in the category section before adding to tray
+  const selectAmount = (num, id) => {
+    dispatch({ type: "CHANGEAMOUNT", payload: { num, id } });
   };
 
   return (
-    <div className="fixed top-0 flex flex-col justify-center items-center overflow-y-auto overscroll-contain h-full w-full backdrop-opacity-70 bg-black/95 p-5">
+    <div className="fixed top-0 flex flex-col lg:justify-center items-center overflow-y-auto overscroll-contain h-full w-full backdrop-opacity-90 bg-black/95 backdrop-blur-md px-2 py-3">
       {/*Modal that displays the food delicacies of the particular food selected by the user */}
-      {fetchedSelectedFood &&
+
+      {fetchedSelectedFood && !imageLoading ? (
         fetchedSelectedFood.map((foodItems) => {
           const { name, categories, id } = foodItems;
           return (
@@ -140,11 +143,11 @@ function Category() {
 
                       {/*Category display for mobile */}
                       <div
-                        className="block md:hidden mb-10"
+                        className="block md:hidden mb-14 p-5"
                         onClick={() => HandleFoodInfo(name, id, foodItems.name)}
                       >
                         <Link to="/foodinfo">
-                          <div className="rounded-full w-[162.81px] h-[162.81px] overflow-hidden mb-8">
+                          <div className="rounded-full w-[142.81px] h-[142.81px] overflow-hidden mb-8">
                             <img
                               src={img}
                               alt="category"
@@ -184,20 +187,41 @@ function Category() {
                             </div>
                             <div>
                               <p className="mb-3">Qty</p>
-                              <div className="flex items-center justify-center rounded-3xl border border-[#e3e4e8]">
-                                <button
-                                  onClick={() => reduceAmountFromCategory(id)}
-                                  className="mx-2"
+                              <div className="flex items-center justify-center ">
+                                <select
+                                  className="rounded-3xl bg-[#D9D9D920] text-white text-[14px] px-1"
+                                  onChange={(e) =>
+                                    selectAmount(e.target.value, id)
+                                  }
                                 >
-                                  <i className="bx bx-minus"></i>
-                                </button>
-                                {amount}
-                                <button
-                                  onClick={() => increaseAmountFromCategory(id)}
-                                  className="mx-2"
-                                >
-                                  <i className="bx bx-plus"></i>
-                                </button>
+                                  <option className="text-black">
+                                    {amount}
+                                  </option>
+                                  <option className="text-black" value="2">
+                                    2
+                                  </option>
+                                  <option className="text-black" value="3">
+                                    3
+                                  </option>
+                                  <option className="text-black" value="4">
+                                    4
+                                  </option>
+                                  <option className="text-black" value="5">
+                                    5
+                                  </option>
+                                  <option className="text-black" value="6">
+                                    6
+                                  </option>
+                                  <option className="text-black" value="7">
+                                    7
+                                  </option>
+                                  <option className="text-black" value="8">
+                                    8
+                                  </option>
+                                  <option className="text-black" value="9">
+                                    9
+                                  </option>
+                                </select>
                               </div>
                             </div>
                           </div>
@@ -217,7 +241,14 @@ function Category() {
               </div>
             </div>
           );
-        })}
+        })
+      ) : (
+        <img
+          src={loading}
+          className="flex mx-auto w-[100px]"
+          alt="loading animation"
+        />
+      )}
       {modalOpen && (
         <div className="hidden md:flex justify-between items-center bg-white/30 opacity-70 rounded-lg w-3/5 mx-auto p-3 text-white">
           <p>
@@ -236,4 +267,4 @@ function Category() {
   );
 }
 
-export default Category
+export default Category;
