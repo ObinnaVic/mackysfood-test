@@ -1,9 +1,9 @@
 const express = require("express");
-const { httpUploadNewProducts } = require("./menus.controller");
+const { httpUploadNewProducts, httpGetFoodData } = require("./menus.controller");
 
 const MenuRouters = express.Router();
 
-MenuRouters.route("/").get(httpUploadNewProducts);
+MenuRouters.route("/").get(httpGetFoodData).post(httpUploadNewProducts);
 
 
 module.exports = MenuRouters;
