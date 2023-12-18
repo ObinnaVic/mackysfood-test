@@ -2,10 +2,22 @@ const mongoose = require("mongoose");
 
 //The main menu schema
 const MenuSchema = new mongoose.Schema({
-  img: String,
-  name: String,
-  id: Number,
-  category: String,
+  img: {
+    type: String,
+    required: true
+  },
+  food: {
+    type: String,
+    required: true
+  },
+  id: {
+    type: Number,
+    required: true
+  },
+  category: {
+    type: String,
+    required: true
+  }
 });
 
 

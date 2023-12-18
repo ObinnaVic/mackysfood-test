@@ -4,16 +4,8 @@ const Menu = require("./menus.mongo");
 
 async function uploadFoodDataToDB(product) {
     try {
-        const data = await Menu.findOneAndUpdate(
-          {
-            food: product.food,
-          },
-          {
-            product,
-          },
-          {
-            upsert: true,
-          }
+        const data = await Menu.create(
+          product
         );
 
         return data;
