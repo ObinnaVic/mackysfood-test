@@ -1,7 +1,7 @@
 const Menu = require("./menus.mongo");
 
 
-
+//upload a new menu(food) data
 async function uploadFoodDataToDB(product) {
     try {
         const data = await Menu.create(
@@ -16,9 +16,14 @@ async function uploadFoodDataToDB(product) {
     }
 }
 
+
+//gets all the menu(food) data
 async function getFoodData() {
     try {
-        const data = Menu.find({});
+        const data = Menu.find({}, {
+            "_id": 0,
+            "__v": 0
+        });
         return data;
     } catch (error) {
         res.status(400).json({
@@ -28,7 +33,24 @@ async function getFoodData() {
 }
 
 
+//To get a particular menu from all menus
+async function getParticularMenu(category) {
+    try {
+        const data = await Menu.find({
+          category: { $regex: category, $options: "i" },
+        });
+
+        return data;
+    } catch (error) {
+        res.status(201).json({
+            error: "Could not find menu"
+        })
+    }
+}
+
+
 module.exports = {
     uploadFoodDataToDB,
-    getFoodData
+    getFoodData,
+    getParticularMenu
 }

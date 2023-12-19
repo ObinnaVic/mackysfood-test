@@ -10,6 +10,7 @@ async function uploadCategories(category) {
     }
 }
 
+//TODO: CREATE THE END POINT ANF FUNCTIONS TO HANDLE FETCHING A PARTICULAR CATEGORY FROM ALL CATEGORIES
 
 module.exports = {
     uploadCategories
