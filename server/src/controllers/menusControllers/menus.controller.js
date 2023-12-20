@@ -1,16 +1,16 @@
 const {
-  uploadFoodDataToDB,
-  getFoodData,
+  uploadMenuToDB,
+  getAllMenu,
   getParticularMenu
 } = require("../../models/menusModels/menus.model");
 
-async function httpUploadNewProducts(req, res) {
-  res.status(201).json(await uploadFoodDataToDB(req.body));
+async function httpUploadNewMenu(req, res) {
+  res.status(201).json(await uploadMenuToDB(req.body));
 }
 
-async function httpGetFoodData(req, res) {
+async function httpGetAllMenu(req, res) {
   try {
-    res.status(200).json(await getFoodData());
+    res.status(200).json(await getAllMenu());
   } catch (error) {
 
     res.status(404).json({
@@ -26,7 +26,7 @@ async function httpGetParticularMenu(req, res) {
 }
 
 module.exports = {
-  httpUploadNewProducts,
-  httpGetFoodData,
+  httpUploadNewMenu,
+  httpGetAllMenu,
   httpGetParticularMenu
 };

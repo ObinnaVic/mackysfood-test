@@ -1,8 +1,9 @@
 const Menu = require("./menus.mongo");
+const Catefory = require("../categoriesModel/categories.mongo");
 
 
 //upload a new menu(food) data: POST "/api/menus"
-async function uploadFoodDataToDB(product) {
+async function uploadMenuToDB(product) {
     try {
         const data = await Menu.create(
           product
@@ -18,12 +19,14 @@ async function uploadFoodDataToDB(product) {
 
 
 //gets all the menu(food) data: GET "/api/menus"
-async function getFoodData() {
+async function getAllMenu() {
     try {
         const data = await Menu.find({}, {
             "_id": 0,
             "__v": 0
         });
+        const categories = await Catefory.find({});
+        console.log(data);
         return data;
     } catch (error) {
         res.status(400).json({
@@ -50,7 +53,7 @@ async function getParticularMenu(category) {
 
 
 module.exports = {
-    uploadFoodDataToDB,
-    getFoodData,
+    uploadMenuToDB,
+    getAllMenu,
     getParticularMenu
 }

@@ -1,13 +1,13 @@
 const express = require("express");
 const {
-  httpUploadNewProducts,
-  httpGetFoodData,
+  httpUploadNewMenu,
+  httpGetAllMenu,
   httpGetParticularMenu
 } = require("./menus.controller");
 
 const MenuRouters = express.Router();
 
-MenuRouters.route("/").get(httpGetFoodData).post(httpUploadNewProducts);
+MenuRouters.route("/").get(httpGetAllMenu).post(httpUploadNewMenu);
 MenuRouters.route("/menu_category").get(httpGetParticularMenu);
 
 module.exports = MenuRouters;
