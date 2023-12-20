@@ -8,6 +8,6 @@ const {
 const MenuRouters = express.Router();
 
 MenuRouters.route("/").get(httpGetFoodData).post(httpUploadNewProducts);
-MenuRouters.route("/menu_category").get(httpGetParticularMenu)
+MenuRouters.route("/menu_category").get(httpGetParticularMenu);
 
 module.exports = MenuRouters;

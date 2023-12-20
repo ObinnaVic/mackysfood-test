@@ -9,8 +9,9 @@ const app = express();
 app.use(express.json());
 app.use("/api/menus", MenuRouters);
 app.use("/api/categories", CategoryRouter);
-app.use(express.static(path.join(__dirname, "..", "public")));
 
+
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 //serving the frontend app from the server
 app.get("/*", (req, res) => {

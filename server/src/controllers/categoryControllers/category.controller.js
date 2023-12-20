@@ -1,6 +1,10 @@
 const {
   uploadCategories,
+  getParticularCategories,
+  getParticularFood
 } = require("../../models/categoriesModel/categories.model");
+
+
 
 async function httpUploadCategories(req, res) {
   try {
@@ -14,6 +18,27 @@ async function httpUploadCategories(req, res) {
   }
 }
 
+async function httpGetParticularCategories(req, res) {
+  try {
+    const { category } = req.query;
+    res.status(201).json(await getParticularCategories(category));
+
+  } catch (error) {
+    res.status(400).json({
+      error: "Could not find Category"
+    })
+  }
+}
+
+async function getParticularFood(req, res) {
+  try {
+    
+  } catch (error) {
+    
+  }
+}
+
 module.exports = {
   httpUploadCategories,
+  httpGetParticularCategories
 };

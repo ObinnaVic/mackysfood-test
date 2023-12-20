@@ -11,7 +11,7 @@ async function uploadFoodDataToDB(product) {
         return data;
     } catch (error) {
         res.status(500).json({
-            error
+            error: "Could not upload food Data"
         })
     }
 }
@@ -27,7 +27,7 @@ async function getFoodData() {
         return data;
     } catch (error) {
         res.status(400).json({
-            error
+            error: "Food Data not found"
         })
     }
 }

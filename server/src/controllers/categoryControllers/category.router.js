@@ -1,8 +1,8 @@
 const express = require("express");
-const { httpUploadCategories} = require("./category.controller")
+const { httpUploadCategories, httpGetParticularCategories} = require("./category.controller")
 
 const CategoryRouter = express.Router();
 
-CategoryRouter.route("/").post(httpUploadCategories)
+CategoryRouter.route("/").get(httpGetParticularCategories).post(httpUploadCategories)
 
 module.exports = CategoryRouter;

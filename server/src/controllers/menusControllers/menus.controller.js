@@ -9,7 +9,15 @@ async function httpUploadNewProducts(req, res) {
 }
 
 async function httpGetFoodData(req, res) {
-  res.status(200).json(await getFoodData());
+  try {
+    res.status(200).json(await getFoodData());
+  } catch (error) {
+
+    res.status(404).json({
+      error: "Menu not found"
+    })
+    
+  }
 }
 
 async function httpGetParticularMenu(req, res) {
