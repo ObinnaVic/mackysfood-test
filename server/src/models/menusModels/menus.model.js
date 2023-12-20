@@ -1,7 +1,7 @@
 const Menu = require("./menus.mongo");
 
 
-//upload a new menu(food) data
+//upload a new menu(food) data: POST "/api/menus"
 async function uploadFoodDataToDB(product) {
     try {
         const data = await Menu.create(
@@ -17,10 +17,10 @@ async function uploadFoodDataToDB(product) {
 }
 
 
-//gets all the menu(food) data
+//gets all the menu(food) data: GET "/api/menus"
 async function getFoodData() {
     try {
-        const data = Menu.find({}, {
+        const data = await Menu.find({}, {
             "_id": 0,
             "__v": 0
         });
@@ -33,7 +33,7 @@ async function getFoodData() {
 }
 
 
-//To get a particular menu from all menus
+//To get a particular menu from all menus: GET "/api/menus/menu_category?category=launch"
 async function getParticularMenu(category) {
     try {
         const data = await Menu.find({

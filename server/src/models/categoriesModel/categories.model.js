@@ -1,6 +1,6 @@
 const Category = require("./categories.mongo");
 
-//function to upload all categories
+//function to upload all categories: POST "/api/categories"
 async function uploadCategories(category) {
     try {
         const data = await Category.create(category);
@@ -11,7 +11,7 @@ async function uploadCategories(category) {
     }
 }
 
-//Function to fetch particular categories from the database
+//Function to fetch particular categories from the database: GET "api/categories?category=snacks"
 async function getParticularCategories(category) {
     try {
         const data = await Category.find({
@@ -24,11 +24,29 @@ async function getParticularCategories(category) {
     }
 }
 
-//Function to get the details of a particular food that matches the id being passed
+//Function to get the details of a particular food that matches the id being passed: GET "/api/categories/id"
 async function getParticularFood(foodID) {
     try {
-        const data = Category.findOne({
-            id: foodID
+        const data = await Category.findOne({
+            _id: foodID
+        })
+
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//Function to update a particular food 
+async function updateParticularFood(foodData) {
+    try {
+        const { name } = foodData;
+        const data = await Category.findOneAndUpdate({
+            name: {$regex: name, $options: "i"}
+        }, {
+            foodData
+        }, {
+            upsert: true
         })
 
         return data;
@@ -40,5 +58,6 @@ async function getParticularFood(foodID) {
 module.exports = {
     uploadCategories,
     getParticularCategories,
-    getParticularFood
+    getParticularFood,
+    updateParticularFood
 }
