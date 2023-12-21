@@ -1,7 +1,8 @@
 const {
   uploadMenuToDB,
   getAllMenu,
-  getParticularMenu
+  getParticularMenu,
+  uploadOrUpdateAMenu
 } = require("../../models/menusModels/menus.model");
 
 async function httpUploadNewMenu(req, res) {
@@ -25,8 +26,26 @@ async function httpGetParticularMenu(req, res) {
   res.status(200).json(await getParticularMenu(category))
 }
 
+async function httpUploadOrUpdateMenu(req, res) {
+  try {
+    const menu = req.body;
+    if (menu) {
+      res.status(201).json(await uploadOrUpdateAMenu(menu))
+    }
+
+    res.status(400).json({
+      error: "Could not access inputted menu"
+    })
+  } catch (error) {
+    res.status(400).json({
+      error: "Could not update or upload menu"
+    })
+  }
+}
+
 module.exports = {
   httpUploadNewMenu,
   httpGetAllMenu,
-  httpGetParticularMenu
+  httpGetParticularMenu,
+  httpUploadOrUpdateMenu
 };

@@ -61,6 +61,7 @@ async function updateParticularFood(foodData) {
   }
 }
 
+//function to delete a particular food from the category: DELETE "/api/categories/:id"
 async function deleteParticularFood(foodID) {
   try {
     const data = await Category.findOneAndDelete({
