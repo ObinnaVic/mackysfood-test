@@ -1,16 +1,5 @@
 const Category = require("./categories.mongo");
 
-//function to upload all categories: POST "/api/categories"
-async function uploadCategories(category) {
-  try {
-    const data = await Category.create(category);
-
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 //Function to fetch particular categories from the database: GET "api/categories?category=snacks"
 async function getParticularCategories(category) {
   try {
@@ -37,6 +26,21 @@ async function getParticularFood(foodID) {
   }
 }
 
+
+
+
+
+//function to upload all categories: POST "/api/categories"
+async function uploadCategories(category) {
+  try {
+    const data = await Category.create(category);
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 //Function to update a particular food
 async function updateParticularFood(foodData) {
   try {
@@ -60,6 +64,9 @@ async function updateParticularFood(foodData) {
     console.log(error);
   }
 }
+
+
+
 
 //function to delete a particular food from the category: DELETE "/api/categories/:id"
 async function deleteParticularFood(foodID) {
